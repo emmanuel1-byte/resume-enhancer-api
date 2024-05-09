@@ -1,5 +1,5 @@
 const multer = require('multer');
-const errorHander = require('./validation');
+const respond = require('../utils/respond');
 const storage = multer.memoryStorage()
 
 
@@ -22,7 +22,20 @@ async function handlefileSizeLimitError(err, req, res, next) {
       });
     next();
   } catch (err) {
-    errorHander(err, req, res, next)
+    next(err)
+  }
+}
+
+function fileFilter(req, res, next) {
+  try {
+    if (!req.file) return respond(res, 400, "Resume file required")
+
+    if (req.file.mimetype !== "application/pdf")
+      return respond(res, 415, "Invalid file format pdf file expected!")
+    
+    next()
+  } catch (err) {
+    next(err)
   }
 }
 
@@ -43,4 +56,4 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-module.exports = { upload, handlefileSizeLimitError }
+module.exports = { upload, handlefileSizeLimitError, fileFilter }

@@ -9,6 +9,7 @@ const {
 const {
   handlefileSizeLimitError,
   upload,
+  fileFilter,
 } = require("../../middlewares/upload");
 
 /**
@@ -17,6 +18,7 @@ const {
 enhancement.post(
   "/upload",
   upload.single("resume"),
+  fileFilter,
   handlefileSizeLimitError,
   enhanceResume
 );
