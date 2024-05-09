@@ -1,0 +1,12 @@
+{"level":"error","message":"Expected ':' after property name in JSON at position 9"}
+{"level":"error","message":"Expected ':' after property name in JSON at position 9"}
+{"level":"error","message":"Expected ':' after property name in JSON at position 9"}
+{"level":"error","message":"Expected ':' after property name in JSON at position 9"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'buffer')"}
+{"level":"error","message":"Resume validation failed: resume_url: Path `resume_url` is required."}
+{"level":"error","message":"Resume validation failed: resume_url: Path `resume_url` is required."}
+{"level":"error","message":"Error Uploading file to cloudinary: [object Object]"}
+{"level":"error","message":"Error Uploading file to cloudinary: [object Object]"}
+{"level":"error","message":"Error Uploading file to cloudinary: [object Object]"}
+{"level":"error","message":"resolve is not defined"}
+{"level":"error","message":"Request Timeout"}

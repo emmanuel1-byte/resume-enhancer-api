@@ -5,7 +5,7 @@ const sawggerUi = require('swagger-ui-express')
 const cors = require('cors')
 const swaggerDocument = require('../doc/swagger.json');
 const logger = require('./utils/logger');
-
+const { globalErrorHandler, routeNotFound } = require('./middlewares/error')
 const app = express();
 
 const port = process.env.PORT || 3000;
@@ -25,14 +25,10 @@ app.get("/", (req, res) => {
     .json({ success: true, message: "Welcome to Resume Enhancement API 🔥🔥" });
 });
 
-app.use("*", (req, res) => {
-  res.status(404).json({ success: false, message: "Endpoint not found" });
-});
 
-app.use((err, req, res, next) => {
-  logger.error(err.stack)
-  res.status(500).json({ success: false, message: "Internal Server Error" });
-});
+
+app.use(routeNotFound)
+app.use(globalErrorHandler)
 
 app.listen(port, () => {
   logger.info(`Server is running on port ${port}`);

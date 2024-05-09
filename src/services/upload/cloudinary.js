@@ -1,5 +1,5 @@
 const cloudinary = require('cloudinary').v2
-const config = require('../../utils/config.js')
+const config = require('../../utils/config.js');
 
 /**
  * Configures the Cloudinary SDK with the necessary credentials.
@@ -16,4 +16,25 @@ cloudinary.config({
   api_secret: config.CLOUDINARY_API_SECRET,
 });
 
-module.exports = { cloudinary }
+
+/**
+ * Uploads a PDF stream to Cloudinary.
+ * @param {Readable} pdfStream - Readable stream containing the PDF data.
+ * @returns {Promise<Object>} A promise that resolves with the Cloudinary upload result object.
+ * @throws {Error} If there is an error during the upload process.
+ */
+function uploadToCloudinary(pdfStream) {
+  return new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream({ resource_type: "auto", },
+      (error, result) => {
+        if (error) {
+          reject(error)
+        }
+        resolve(result)
+      }
+    )
+    pdfStream.pipe(uploadStream)
+  })
+}
+
+module.exports = { cloudinary, uploadToCloudinary }
