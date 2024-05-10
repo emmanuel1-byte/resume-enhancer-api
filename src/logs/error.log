@@ -10,3 +10,4 @@
 {"level":"error","message":"Error Uploading file to cloudinary: [object Object]"}
 {"level":"error","message":"resolve is not defined"}
 {"level":"error","message":"Request Timeout"}
+{"level":"error","message":"Request Timeout"}
