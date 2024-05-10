@@ -17,11 +17,12 @@ const createAndUploadPdf = require("./pdf");
  */
 async function enhanceResume(req, res, next) {
   try {
-    const resumeBuffer = req.file.buffer;
-    const parsedPdf = await PDFParser(resumeBuffer);
-    const enhancedContent = await model.generateContent(config.GEMINI_PROMPT + parsedPdf.text);
-    const resume = removeMarkdown(enhancedContent.response.text());
-    createAndUploadPdf(res, resume)
+    const  uploadedResumeBuffer = req.file.buffer;
+    const parsedResumeText = await PDFParser(uploadedResumeBuffer);
+    const enhancedResumeContent = await model.generateContent(config.GEMINI_PROMPT + parsedResumeText.text);
+    const  plainEnhancedContent = removeMarkdown( enhancedResumeContent.response.text());
+    const enhancedResumeDocument = await  createAndUploadPdf(plainEnhancedContent)
+    return respond(res, 201, "Resume enhanced successfully", { resume: enhancedResumeDocument })
   } catch (err) {
     next(err)
   }

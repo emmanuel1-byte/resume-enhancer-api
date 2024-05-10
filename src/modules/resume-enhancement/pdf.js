@@ -3,7 +3,6 @@ const PDFDOCUMENT = require("pdfkit");
 const respository = require("./repository");
 const { uploadToCloudinary } = require("../../services/upload/cloudinary");
 const logger = require("../../utils/logger");
-const respond = require("../../utils/respond");
 
 
 /**
@@ -30,10 +29,10 @@ function createPdf(resume) {
     return new Promise((resolve, reject) => {
         const doc = new PDFDOCUMENT();
         const chunks = [];
-        
+
         doc.on("data", (chunk) => { chunks.push(chunk) });
-        doc.on('end', () => resolve(chunks)); 
-        doc.on('error', (err) => reject(err)); 
+        doc.on('end', () => resolve(chunks));
+        doc.on('error', (err) => reject(err));
 
         doc.text(resume);
         doc.end();
@@ -47,13 +46,12 @@ function createPdf(resume) {
  * @param {string} resume - The resume text.
  * @returns {Promise<void>} A promise that resolves once the upload is completed.
  */
-async function createAndUploadPdf(res, resume) {
+async function createAndUploadPdf(resume) {
     try {
         const chunks = await createPdf(resume)
         const pdfStream = streamOperation(chunks)
         const cloudinaryUpload = await uploadToCloudinary(pdfStream)
-        const enhancedResume = await respository.create(cloudinaryUpload.secure_url);
-        if (enhancedResume) return respond(res, 201, "Resume enhanced successfully", { enhancedResume })
+        return await respository.create(cloudinaryUpload.secure_url);
     } catch (err) {
         logger.error(err.message)
     }
