@@ -16,10 +16,7 @@ const storage = multer.memoryStorage()
 async function handlefileSizeLimitError(err, req, res, next) {
   try {
     if (err.code === "LIMIT_FILE_SIZE")
-      return res.status(400).json({
-        success: false,
-        message: "File size exceeds the maximum limit",
-      });
+      return respond(res, 400, "File size exceeds the maximum limit");
     next();
   } catch (err) {
     next(err)
@@ -32,7 +29,7 @@ function fileFilter(req, res, next) {
 
     if (req.file.mimetype !== "application/pdf")
       return respond(res, 415, "Invalid file format pdf file expected!")
-    
+
     next()
   } catch (err) {
     next(err)
