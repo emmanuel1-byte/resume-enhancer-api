@@ -6,7 +6,7 @@ const respository = require("./repository");
 const config = require("../../utils/config");
 const resumeSchemaParam = require("./schema");
 const respond = require("../../utils/respond");;
-const createAndUploadPdf = require("./pdf");
+const createAndUploadPdf = require("../../helpers/pdf");
 
 /**
  * Enhances a resume by parsing, generating content, and uploading to Cloudinary.

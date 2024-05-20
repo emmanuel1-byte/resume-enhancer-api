@@ -1,8 +1,8 @@
 const { Readable } = require("stream");
 const PDFDOCUMENT = require("pdfkit");
-const respository = require("./repository");
-const { uploadToCloudinary } = require("../../services/upload/cloudinary");
-const logger = require("../../utils/logger");
+const respository = require("../modules/resume-enhancement/repository");
+const { uploadToCloudinary } = require("../services/upload/cloudinary");
+const logger = require("../utils/logger");
 
 
 /**
